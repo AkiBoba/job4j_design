@@ -34,7 +34,7 @@ public class MatrixIt implements Iterator<Integer> {
                 res = true;
                 break;
             } else if (data[row].length - 1 >= column) {
-                res =true;
+                res = true;
                 break;
             } else {
                 row++;
