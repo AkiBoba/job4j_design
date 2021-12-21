@@ -13,7 +13,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int size;
 
-    private int modCount;
+    private int modCount = 0;
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
@@ -21,17 +21,24 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-        container[container.]
+        container[modCount] = value;
+        modCount++;
     }
 
     @Override
     public T set(int index, T newValue) {
-        return newValue;
+        T tmp = null;
+        if (index < 0 && index > modCount) {
+            tmp = container[index];
+            container[index] = newValue;
+        }
+        return tmp;
     }
 
     @Override
     public T remove(int index) {
-        return container[index];
+        T tmp = container[index];
+            return tmp;
     }
 
     @Override
@@ -41,7 +48,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public int size() {
-        return 0;
+        return modCount;
     }
 
     @Override
