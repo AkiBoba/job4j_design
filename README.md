@@ -19,4 +19,4 @@ Init maven
     Джуниор.Уроки.Generics
 
 #0. Что такое обобщенные типы (generics) [#4952]
-#5.2.2. Реализовать Store<T extends Base> [#157] ----
+#5.2.2. Реализовать Store<T extends Base> [#157] -----

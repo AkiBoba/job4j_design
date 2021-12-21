@@ -1,5 +1,6 @@
 package ru.job4j.generic;
 
+import javax.lang.model.type.NullType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -14,29 +15,17 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public void add(T model) {
-       if (!storage.containsKey(model.getId())) {
-           storage.put(model.getId(), model);
-       }
+       storage.putIfAbsent(model.getId(), model);
     }
 
     @Override
     public boolean replace(String id, T model) {
-        boolean res = false;
-        if (storage.containsKey(id)) {
-            storage.put(id, model);
-            res = true;
-        }
-        return res;
+        return  storage.put(id, model) == null;
     }
 
     @Override
     public boolean delete(String id) {
-        boolean res = false;
-        if (storage.containsKey(id)) {
-            storage.remove(id);
-            res = true;
-        }
-        return res;
+           return storage.remove(id, storage.get(id));
     }
 
     @Override
