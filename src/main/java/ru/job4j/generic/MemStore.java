@@ -1,9 +1,7 @@
 package ru.job4j.generic;
 
-import javax.lang.model.type.NullType;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * каркас универсального хранилища.
