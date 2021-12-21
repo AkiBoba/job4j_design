@@ -2,10 +2,7 @@ package ru.job4j.collection;
 
 import ru.job4j.list.List;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
 
@@ -13,7 +10,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int size;
 
-    private int modCount = 0;
+    private int modCount;
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
@@ -21,29 +18,34 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-        container[modCount] = value;
-        modCount++;
+        if (modCount < container.length) {
+            container[modCount] = value;
+            modCount++;
+        } else {
+            container = Arrays.copyOf(container, container.length * 2);
+            modCount++;
+            container[modCount] = value;
+        }
     }
 
     @Override
     public T set(int index, T newValue) {
-        T tmp = null;
-        if (index < 0 && index > modCount) {
-            tmp = container[index];
+            T tmp = container[Objects.checkIndex(index, container.length)];
             container[index] = newValue;
-        }
         return tmp;
     }
 
     @Override
     public T remove(int index) {
-        T tmp = container[index];
-            return tmp;
+        T tmp = container[Objects.checkIndex(index, container.length)];
+        System.arraycopy(container, index + 1, container, index, modCount - index);
+        modCount--;
+        return tmp;
     }
 
     @Override
     public T get(int index) {
-        return container[index];
+            return container[Objects.checkIndex(index, container.length)];
     }
 
     @Override
@@ -53,7 +55,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
 
             @Override
             public boolean hasNext() {
