@@ -34,24 +34,36 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T newValue) {
-            T tmp = container[Objects.checkIndex(index, container.length)];
+        if (Objects.checkIndex(index, container.length) != index) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            T tmp = container[index];
             container[index] = newValue;
-        return tmp;
+            return tmp;
+        }
     }
 
     @Override
     public T remove(int index) {
-        T tmp = container[Objects.checkIndex(index, container.length)];
-        System.arraycopy(container, index + 1, container, index, modCount - index);
-        container[size - 1] = null;
-        modCount++;
-        size--;
-        return tmp;
+        if (Objects.checkIndex(index, container.length) != index) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            T tmp = container[index];
+            System.arraycopy(container, index + 1, container, index, modCount - index);
+            container[size - 1] = null;
+            modCount++;
+            size--;
+            return tmp;
+        }
     }
 
     @Override
     public T get(int index) {
-            return container[Objects.checkIndex(index, container.length)];
+        if (Objects.checkIndex(index, container.length) != index) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            return container[index];
+        }
     }
 
     @Override
@@ -62,20 +74,22 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
-            int expectedModCount = modCount;
+            final int expectedModCount = modCount;
             int index = 0;
 
             @Override
             public boolean hasNext() {
-                return index < size && ;
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                } else {
+                    return index < size;
+                }
             }
 
             @Override
             public T next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                } else if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
                 } else {
                     return container[index++];
                 }
