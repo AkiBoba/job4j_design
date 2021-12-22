@@ -22,10 +22,14 @@ public class SimpleArrayList<T> implements List<T> {
             container[modCount] = value;
             modCount++;
         } else {
+            grow(value);
+        }
+    }
+
+    public void grow(T value) {
             container = Arrays.copyOf(container, container.length * 2);
             modCount++;
             container[modCount] = value;
-        }
     }
 
     @Override
