@@ -20,50 +20,44 @@ public class SimpleArrayList<T> implements List<T> {
     public void add(T value) {
         if (modCount < container.length) {
             container[size++] = value;
-            modCount++;
         } else {
             grow(value);
+            container[++size] = value;
         }
+        modCount++;
     }
 
     public void grow(T value) {
+        if (container.length != 0) {
             container = Arrays.copyOf(container, container.length * 2);
-            container[++size] = value;
-            modCount++;
+        } else {
+            container = Arrays.copyOf(container, 10);
+        }
     }
 
     @Override
     public T set(int index, T newValue) {
-        if (Objects.checkIndex(index, container.length) != index) {
-            throw new IndexOutOfBoundsException();
-        } else {
+        Objects.checkIndex(index, container.length);
             T tmp = container[index];
             container[index] = newValue;
             return tmp;
-        }
     }
 
     @Override
     public T remove(int index) {
-        if (Objects.checkIndex(index, container.length) != index) {
-            throw new IndexOutOfBoundsException();
-        } else {
-            T tmp = container[index];
-            System.arraycopy(container, index + 1, container, index, modCount - index);
-            container[size - 1] = null;
-            modCount++;
-            size--;
-            return tmp;
-        }
+        Objects.checkIndex(index, container.length);
+        T tmp = container[index];
+        System.arraycopy(container, index + 1, container, index, modCount - index);
+        container[size - 1] = null;
+        modCount++;
+        size--;
+        return tmp;
     }
 
     @Override
     public T get(int index) {
-        if (Objects.checkIndex(index, container.length) != index) {
-            throw new IndexOutOfBoundsException();
-        } else {
-            return container[index];
-        }
+        Objects.checkIndex(index, container.length);
+        return container[index];
     }
 
     @Override
