@@ -9,16 +9,10 @@ import java.util.Objects;
  * @author Vladimir Likhachev
  */
 public class SimpleLinkedList<E> implements List<E> {
-    transient Node<E> first;
-    transient Node<E> last;
-    transient int size;
-    transient int modCount;
-
-    public SimpleLinkedList() {
-        this.first = null;
-        size = 0;
-        modCount = 0;
-    }
+    private Node<E> first;
+    private Node<E> last;
+    private int size;
+    private int modCount;
 
     private static class Node<E> {
         E item;
@@ -51,7 +45,7 @@ public class SimpleLinkedList<E> implements List<E> {
         Node<E> tmp = first;
         if (index != 0) {
             while (i != index) {
-                tmp = first.next;
+                tmp = tmp.next;
                 i++;
             }
         }
