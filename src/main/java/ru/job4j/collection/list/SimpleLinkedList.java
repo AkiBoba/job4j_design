@@ -81,6 +81,7 @@ public class SimpleLinkedList<E> implements List<E> {
                 if (index != 0) {
                     res = res.next;
                 }
+                index++;
                 return res.item;
             }
         };
