@@ -19,10 +19,6 @@ public class SimpleLinkedList<E> implements List<E> {
     public SimpleLinkedList() {
         this.head = null;
     }
-//
-//    private boolean isEmpty() {
-//        return head == null;
-//    }
 
     @Override
     public void add(E value) {
