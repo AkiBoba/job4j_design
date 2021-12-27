@@ -42,12 +42,9 @@ public class SimpleLinkedList<E> implements List<E> {
     public E get(int index) {
         Objects.checkIndex(index, size);
         Node<E> tmp = first;
-        for (int i = 0; i <= index; i++) {
-            if (i == index) {
-                break;
-            }
+        for (int i = 0; i < index; i++) {
             tmp = tmp.next;
-        }
+            }
         return tmp.item;
     }
 
