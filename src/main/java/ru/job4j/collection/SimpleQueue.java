@@ -8,7 +8,7 @@ public class SimpleQueue<T> {
     private final SimpleStack<T> out = new SimpleStack<>();
 
     public T poll() {
-        if (in.getSize() == 0) {
+        if (in.getSize() == 0 && out.getSize() == 0) {
             throw new NoSuchElementException();
         }
         if (out.getSize() == 0) {
