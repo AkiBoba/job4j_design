@@ -13,10 +13,9 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public boolean add(T value) {
-        boolean res = false;
-        if (set.size() == 0 || !contains(value)) {
+        boolean res = !contains(value);
+        if (set.size() == 0 || res) {
             set.add(value);
-            res = true;
         }
         return res;
     }
