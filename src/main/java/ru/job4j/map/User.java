@@ -1,9 +1,6 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Vladimir Likhachev
@@ -22,12 +19,18 @@ public class User {
 
     public static void main(String[] args) {
         Map<User, Object> map = new HashMap<>();
-        User user1 = new User("Ivan", 1, Calendar.getInstance());
-        User user2 = new User("Ivan", 1, Calendar.getInstance());
+        Calendar calendar = new GregorianCalendar(2017, 0, 25, 12, 50, 45);
+        User user1 = new User("Ivan", 1, calendar);
+        User user2 = new User("Ivan", 1, calendar);
         map.put(user1, new Object());
         map.put(user2, new Object());
         for (User user : map.keySet()) {
             System.out.println("user = " + user);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
     }
 }
