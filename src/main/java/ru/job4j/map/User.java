@@ -17,6 +17,18 @@ public class User {
         this.birthday = birthday;
     }
 
+    public static void main(String[] args) {
+        Map<User, Object> map = new HashMap<>();
+        Calendar calendar = new GregorianCalendar(2017, Calendar.JUNE, 25, 12, 50, 45);
+        User user1 = new User("Ivan", 1, calendar);
+        User user2 = new User("Ivan", 1, calendar);
+        map.put(user1, new Object());
+        map.put(user2, new Object());
+        for (User user : map.keySet()) {
+            System.out.println("user = " + user);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -29,15 +41,8 @@ public class User {
         return children == user.children && Objects.equals(name, user.name) && Objects.equals(birthday, user.birthday);
     }
 
-    public static void main(String[] args) {
-        Map<User, Object> map = new HashMap<>();
-        Calendar calendar = new GregorianCalendar(2017, 5, 25, 12, 50, 45);
-        User user1 = new User("Ivan", 1, calendar);
-        User user2 = new User("Ivan", 1, calendar);
-        map.put(user1, new Object());
-        map.put(user2, new Object());
-        for (User user : map.keySet()) {
-            System.out.println("user = " + user);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
     }
 }
