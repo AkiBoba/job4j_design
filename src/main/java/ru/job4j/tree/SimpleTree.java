@@ -19,11 +19,6 @@ public class SimpleTree<E> implements Tree<E> {
         boolean rsl = false;
         if (findBy(parent).isPresent() && findBy(child).isEmpty()) {
             Node<E> result = findBy(parent).get();
-            for (Node<E> el : result.children) {
-                if (el.value == child) {
-                    break;
-                }
-            }
             result.children.add(new Node<>(child));
             rsl = true;
         }
