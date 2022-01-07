@@ -34,7 +34,6 @@ public class SimpleTree<E> implements Tree<E> {
     }
 
     @Override
-
     public boolean isBinary() {
         Boolean result = false;
         Predicate<Node<E>> filter = element -> element.children.size() > 2;
