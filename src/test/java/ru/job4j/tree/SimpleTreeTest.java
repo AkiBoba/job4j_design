@@ -49,7 +49,7 @@ public class SimpleTreeTest {
     }
 
         @Test
-        public void BinaryTreeTestTrue() {
+        public void whenBinaryTreeTest() {
             Tree<Integer> tree = new SimpleTree<>(1);
             tree.add(1, 2);
             tree.add(1, 3);
@@ -62,7 +62,7 @@ public class SimpleTreeTest {
         }
 
         @Test
-        public void BinaryTreeTestFalse() {
+        public void whenBinaryTreeFalseTest() {
             Tree<Integer> tree = new SimpleTree<>(1);
             tree.add(1, 2);
             tree.add(1, 3);
