@@ -13,6 +13,7 @@ public class ResultFile {
                 for (int col = 0; col < size; col++) {
                     result[row][col] = (row + 1) * (col + 1);
                     out.write(String.valueOf(result[row][col]).getBytes());
+                    out.write((" ").getBytes());
                 }
                 out.write(System.lineSeparator().getBytes());
             }

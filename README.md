@@ -54,4 +54,4 @@ Init maven
 #2. Статистика по коллекции.
 
     Джуниор.FileOutputStream
-#0.1. FileOutputStream. [#252488] 
+#0.1. FileOutputStream. [#252488] -
