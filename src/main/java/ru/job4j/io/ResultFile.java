@@ -6,11 +6,13 @@ import java.io.FileOutputStream;
  * @author Vladimir Likhachev
  */
 public class ResultFile {
-    public static void multiple(int[][] matrix) {
+    public void multiple(int size) {
+        int[][] result = new int[size][size];
         try (FileOutputStream out = new FileOutputStream("result.txt")) {
-            for (int[] ints : matrix) {
-                for (int col = 0; col < matrix.length; col++) {
-                    out.write(String.valueOf(ints[col]).getBytes());
+            for (int row = 0; row < size; row++) {
+                for (int col = 0; col < size; col++) {
+                    result[row][col] = (row + 1) * (col + 1);
+                    out.write(String.valueOf(result[row][col]).getBytes());
                 }
                 out.write(System.lineSeparator().getBytes());
             }
@@ -20,11 +22,8 @@ public class ResultFile {
     }
 
     public static void main(String[] args) {
-        int[][] matrix = {
-                {1, 2},
-                {2, 4}
-        };
-        ResultFile.multiple(matrix);
+        ResultFile resultFile = new ResultFile();
+        resultFile.multiple(3);
     }
 }
 
