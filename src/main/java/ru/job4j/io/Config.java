@@ -6,29 +6,31 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Config {
     private final String path;
-    private final Map<String, String> values = new HashMap<String, String>();
+    private final Map<String, String> values = new HashMap<>();
 
     public Config(final String path) {
         this.path = path;
     }
 
     public void load() {
-        Predicate<String> filter = line -> !line.startsWith("#") || !line.startsWith(" ");
+        Predicate<String> filter = line -> !line.isEmpty() && !line.startsWith("#");
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines()
                     .filter(filter)
-                    .forEach(s -> values.put(s.split("=")[0], s.split("=")[2]));
+                    .forEach(s -> values.put(s.split("=")[0],
+                            s.split("=")[1]));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public String value(String key) {
-        throw new UnsupportedOperationException("Don't impl this method yet!");
+        return values.get(key);
     }
 
     @Override
@@ -43,7 +45,7 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("app.properties.txt"));
+        System.out.println(new Config("app.properties"));
     }
 }
 
