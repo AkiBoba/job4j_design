@@ -59,3 +59,4 @@ Init maven
 #0.2. FileInputStream [#4898] 
 #0.3. BufferedReader. [#252489]
 #0.4. BufferedOutputStream [#252490]
+#1. Читаем файл конфигурации [#858]
