@@ -20,7 +20,7 @@ public class Analizy {
                         flag = true;
                     } else if (flag) {
                         list.add(line.split(" ")[1]);
-                        outresults.println((list.get(0) + ";" + list.get(list.size() - 1)));
+                        outresults.println(list.get(0) + ";" + list.get(list.size() - 1) + " ");
                         list.clear();
                         flag = false;
                     }
