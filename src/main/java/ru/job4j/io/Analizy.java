@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 
 public class Analizy {
     public void unavailable(String source, String target) {
+
         boolean flag = false;
         try (PrintWriter outresults = new PrintWriter(new FileOutputStream(target))) {
             Predicate<String> filter = line -> line.startsWith("400") || line.startsWith("500");
