@@ -18,7 +18,7 @@ public class Analizy {
                     if (filter.test(line)) {
                         list.add(line.split(" ")[1]);
                         flag = true;
-                    } else if (flag){
+                    } else if (flag) {
                         list.add(line.split(" ")[1]);
                         outresults.println((list.get(0) + ";" + list.get(list.size() - 1)));
                         list.clear();
