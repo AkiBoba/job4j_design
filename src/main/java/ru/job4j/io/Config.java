@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class Config {
     private final String path;
@@ -17,12 +18,14 @@ public class Config {
     }
 
     public void load() {
-        Predicate<String> filter = line -> !line.isEmpty() && !line.startsWith("#");
+        String regex = ".*=.*";
+        Predicate<String> filter = line -> Pattern.matches(regex, line);
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines()
                     .filter(filter)
-                    .forEach(s -> values.put(s.split("=")[0],
-                            s.split("=")[1]));
+                    .map(s -> s.split("="))
+                    .forEach(s -> values.put(s[0],
+                            s[1]));
         } catch (IOException e) {
             e.printStackTrace();
         }
