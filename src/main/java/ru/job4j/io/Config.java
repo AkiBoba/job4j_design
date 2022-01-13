@@ -18,7 +18,7 @@ public class Config {
     }
 
     public void load() {
-        String regex = ".*=.*";
+        String regex = ".*=.{1,}";
         Predicate<String> filter = line -> Pattern.matches(regex, line);
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines()
