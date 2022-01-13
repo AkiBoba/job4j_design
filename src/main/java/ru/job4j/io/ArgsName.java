@@ -34,8 +34,7 @@ public class ArgsName {
         }
         String regex = ".*=.{1,}";
         Predicate<String> filter = line -> Pattern.matches(regex, line);
-        for (String str :
-                args) {
+        for (String str : args) {
             if (!filter.test(str)) {
                 result = false;
                 break;
