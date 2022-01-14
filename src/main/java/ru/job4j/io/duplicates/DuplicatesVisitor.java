@@ -6,7 +6,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    private final Map<FileProperty, String> map = new HashMap();
+    private final Map<FileProperty, String> map = new HashMap<>();
     private final Set<String> list = new HashSet<>();
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
