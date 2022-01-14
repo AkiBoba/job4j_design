@@ -32,7 +32,7 @@ public class ArgsName {
         if (args.length == 0) {
             return false;
         }
-        String regex = "^-[^=]*=[^=]{1,}";
+        String regex = "^-[^=]+=[^=]+";
         Predicate<String> filter = line -> Pattern.matches(regex, line);
         for (String str : args) {
             if (!filter.test(str)) {

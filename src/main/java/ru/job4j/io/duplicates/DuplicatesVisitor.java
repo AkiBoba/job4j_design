@@ -7,7 +7,7 @@ import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     private final Map<FileProperty, String> map = new HashMap();
-    private final List<String> list = new ArrayList<>();
+    private final Set<String> list = new HashSet<>();
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         Path line = file.toAbsolutePath();
@@ -21,7 +21,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         return FileVisitResult.CONTINUE;
     }
 
-    public List<String> getDuplicates() {
+    public Set<String> getDuplicates() {
         return list;
     }
 }
