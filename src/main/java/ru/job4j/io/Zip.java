@@ -23,9 +23,12 @@ public class Zip {
     }
 
     public static void main(String[] args) {
+        ArgsName argsName = ArgsName.of(new String[] {args[0], args[2]});
+        String arg1 = argsName.get("d");
+        String arg2 = argsName.get("o");
         packSingleFile(
-                new File("./pom.xml"),
-                new File("./pom.zip")
+                new File(arg1),
+                new File(arg2)
         );
     }
 }
