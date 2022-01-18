@@ -17,24 +17,22 @@ import java.io.File;
 import static ru.job4j.io.Search.search;
 
 public class Zip {
-    public static void packFiles(List<File> sources, File target, Predicate predicate) {
+    public static void packFiles(List<Path> sources, File target) {
         if (sources.size() > 1) {
-            sources.forEach(s ->  packSingleFile(s.getAbsoluteFile(), target, predicate));
+            sources.forEach(s ->  packSingleFile(s.toAbsolutePath(), target));
         }
-        sources.forEach(s -> packSingleFile(s.getAbsoluteFile(), target, predicate));
+        sources.forEach(s -> packSingleFile(s.toAbsolutePath(), target));
     }
 
-    public static void packSingleFile(File source, File target, Predicate predicate) {
-        if (predicate.test(source.getName())) {
-            throw new IllegalArgumentException();
-        }
+    public static void packSingleFile(Path source, File target) {
+
         try (ZipOutputStream zip = new ZipOutputStream(new
                 BufferedOutputStream(new FileOutputStream(target)))) {
 
-            zip.putNextEntry(new ZipEntry(source.getPath()));
+            zip.putNextEntry(new ZipEntry(source.toString()));
 
             try (BufferedInputStream out = new BufferedInputStream(new
-                    FileInputStream(source))) {
+                    FileInputStream(source.toString()))) {
 
                 zip.write(out.readAllBytes());
             }
@@ -43,9 +41,11 @@ public class Zip {
         }
     }
 
-    public static List<File> excludeFiles(Path root, String exclude) throws IOException {
-        Predicate<Path> condition;
-        return List<File> list;
+       static List<Path> excludeFiles(Path root, String exclude) throws IOException {
+        Predicate<Path> condition = name -> !name.endsWith(exclude);
+        List<Path> list = new ArrayList<>();
+            list.addAll(search(root, condition));
+        return (List<Path>) list;
     }
 
     public static void main(String[] args) throws IOException {
@@ -57,11 +57,9 @@ public class Zip {
         String arg1 = argsName.get("d");
         String arg2 = argsName.get("o");
         String arg3 = argsName.get("e");
-        Predicate<Path> filter = name -> name.toFile().getName().endsWith(arg3);
         packFiles(
-                search(Paths.get(arg1), filter),
-                new File(arg2),
-                filter
+                excludeFiles(Paths.get(arg1), arg3),
+                new File(arg2)
         );
     }
 }
