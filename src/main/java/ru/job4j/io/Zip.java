@@ -14,11 +14,6 @@ public class Zip {
 
     public static void packFiles(List<String> sources, File target) {
         sources.forEach(s ->  packSingleFile(Paths.get(s).toFile(), target));
-//        File file;
-//        for (String str : sources) {
-//            file = Paths.get(str).toFile();
-//            packSingleFile(file, target);
-//        }
     }
 
     public static void packSingleFile(File source, File target) {
@@ -40,10 +35,7 @@ public class Zip {
     }
 
     public static boolean validation(File start, File out) {
-        boolean result = true;
-        if (!start.exists() && !out.exists()) {
-            result = false;
-        }
+        boolean result = start.exists() || out.exists();
         if (!start.isDirectory() && !out.isDirectory()) {
             result = false;
         }
