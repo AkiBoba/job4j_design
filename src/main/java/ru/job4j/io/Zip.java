@@ -13,12 +13,12 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
 
     public static void packFiles(List<String> sources, File target) {
-//        sources.forEach(s ->  packSingleFile(Paths.get(s).toFile(), target));
-        File file;
-        for (String str : sources) {
-            file = Paths.get(str).toFile();
-            packSingleFile(file, target);
-        }
+        sources.forEach(s ->  packSingleFile(Paths.get(s).toFile(), target));
+//        File file;
+//        for (String str : sources) {
+//            file = Paths.get(str).toFile();
+//            packSingleFile(file, target);
+//        }
     }
 
     public static void packSingleFile(File source, File target) {
@@ -39,6 +39,17 @@ public class Zip {
         return list;
     }
 
+    public static boolean validation(File start, File out) {
+        boolean result = true;
+        if (!start.exists() && !out.exists()) {
+            result = false;
+        }
+        if (!start.isDirectory() && !out.isDirectory()) {
+            result = false;
+        }
+        return result;
+    }
+
         public static void main(String[] args) throws IOException {
 
         if (args.length < 3) {
@@ -48,6 +59,8 @@ public class Zip {
         String arg1 = argsName.get("d");
         String arg2 = argsName.get("o");
         String arg3 = argsName.get("e");
-        packFiles(excludeFiles(Paths.get(arg1), arg3), Paths.get(arg1).toFile());
+        if (validation(Paths.get(arg1).toFile(), Paths.get(arg2).toFile())) {
+            packFiles(excludeFiles(Paths.get(arg1), arg3), Paths.get(arg2).toFile());
+        }
     }
 }
