@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,7 +12,18 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
 
     public static void packFiles(List<String> sources, File target) {
-        sources.forEach(s -> packSingleFile(Paths.get(s).toFile(), target));
+        File file;
+        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+            for (String str : sources) {
+                file = Paths.get(str).toFile();
+                zip.putNextEntry(new ZipEntry(file.getPath()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(file))) {
+                    zip.write(out.readAllBytes());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void packSingleFile(File source, File target) {
@@ -34,20 +44,21 @@ public class Zip {
         return list;
     }
 
-    public static boolean validation(File start) {
-        return start.exists() && start.isDirectory() && start.isDirectory();
-    }
-
-        public static void main(String[] args) throws IOException {
-
+    public static boolean validation(String[] args) {
         if (args.length != 3) {
             throw new IllegalArgumentException();
         }
-        ArgsName argsName = ArgsName.of(new String[] {args[0], args[1], args[2]});
+        ArgsName argsName = ArgsName.of(new String[] {args[0]});
         String dirForZip = argsName.get("d");
-        String zipDirOut = argsName.get("o");
-        String exclude = argsName.get("e");
-        if (validation(Paths.get(dirForZip).toFile())) {
+        return (Paths.get(dirForZip).toFile()).exists() && (Paths.get(dirForZip).toFile()).isDirectory();
+    }
+
+    public static void main(String[] args) throws IOException {
+        if (validation(args)) {
+            ArgsName argsName = ArgsName.of(new String[] {args[0], args[1], args[2]});
+            String dirForZip = argsName.get("d");
+            String zipDirOut = argsName.get("o");
+            String exclude = argsName.get("e");
             packFiles(excludeFiles(Paths.get(dirForZip), exclude), Paths.get(zipDirOut).toFile());
         }
     }
