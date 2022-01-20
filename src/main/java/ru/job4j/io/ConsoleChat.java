@@ -22,33 +22,32 @@ public class ConsoleChat {
         this.botAnswers = botAnswers;
     }
 
-    public void run(String ask, String status) {
-        String nextbotAnswers;
+    public void run(String nextAns, String status) {
+        String nextAnswers;
         String next = "Напишите что нибудь еще: ";
         List<String> list = readPhrases();
-        System.out.println(ask);
+        System.out.println(nextAns);
         String string = in.nextLine();
         log.add(string);
         switch (string) {
             case OUT -> {
-                log.forEach(System.out::println);
                 saveLog(log);
                 System.exit(0);
             }
             case STOP -> run(next, STOP);
             case CONTINUE -> {
-                nextbotAnswers = list.get((int) (Math.random() * list.size()));
-                log.add(nextbotAnswers);
-                System.out.println(nextbotAnswers);
+                nextAnswers = list.get((int) (Math.random() * list.size()));
+                log.add(nextAnswers);
+                System.out.println(nextAnswers);
                 run(next, CONTINUE);
                     }
             default -> {
                 if (status.equals(STOP)) {
                     run(next, STOP);
                     }
-                nextbotAnswers = list.get((int) (Math.random() * list.size()));
-                log.add(nextbotAnswers);
-                System.out.println(nextbotAnswers);
+                nextAnswers = list.get((int) (Math.random() * list.size()));
+                log.add(nextAnswers);
+                System.out.println(nextAnswers);
                 run(next, status);
             }
         }
@@ -65,7 +64,7 @@ public class ConsoleChat {
     }
 
     private void saveLog(List<String> log) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter("chat.txt", Charset.forName("WINDOWS-1251")))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(botAnswers, Charset.forName("WINDOWS-1251")))) {
             log.forEach(pw :: println);
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,7 +72,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("bot.txt", "Напишите что нибудь: ");
-        cc.run(cc.botAnswers, CONTINUE);
+        ConsoleChat cc = new ConsoleChat("bot.txt", "chat.txt");
+        cc.run("Напишите что нибудь: ", CONTINUE);
     }
 }
