@@ -44,22 +44,26 @@ public class Zip {
         return list;
     }
 
-    public static boolean validation(String[] args) {
+    public static void validation(String[] args) {
         if (args.length != 3) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Недостаточно аргументов для корректной работы приложения");
         }
         ArgsName argsName = ArgsName.of(new String[] {args[0]});
         String dirForZip = argsName.get("d");
-        return (Paths.get(dirForZip).toFile()).exists() && (Paths.get(dirForZip).toFile()).isDirectory();
+        if (!Paths.get(dirForZip).toFile().exists() && !Paths.get(dirForZip).toFile().isDirectory()) {
+            throw new IllegalArgumentException("Дирректория для архивирования не существует или это не папка");
+        }
     }
 
     public static void main(String[] args) throws IOException {
-        if (validation(args)) {
-            ArgsName argsName = ArgsName.of(new String[] {args[0], args[1], args[2]});
-            String dirForZip = argsName.get("d");
-            String zipDirOut = argsName.get("o");
-            String exclude = argsName.get("e");
-            packFiles(excludeFiles(Paths.get(dirForZip), exclude), Paths.get(zipDirOut).toFile());
+        validation(args);
+        ArgsName argsName = ArgsName.of(args);
+        String dirForZip = argsName.get("d");
+        String zipDirOut = argsName.get("o");
+        String exclude = argsName.get("e");
+        if (exclude.startsWith(".")) {
+            exclude = exclude.substring(1);
         }
+        packFiles(excludeFiles(Paths.get(dirForZip), exclude), Paths.get(zipDirOut).toFile());
     }
 }
