@@ -56,7 +56,7 @@ public class ConsoleChat {
 
     private List<String> readPhrases() {
         List<String> phrases = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(botAnswers))) {
             in.lines().forEach(phrases::add);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class ConsoleChat {
     }
 
     private void saveLog(List<String> log) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(botAnswers, Charset.forName("WINDOWS-1251")))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(path, Charset.forName("WINDOWS-1251")))) {
             log.forEach(pw :: println);
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("bot.txt", "chat.txt");
+        ConsoleChat cc = new ConsoleChat("chat.txt", "bot.txt");
         cc.run("Напишите что нибудь: ", CONTINUE);
     }
 }
