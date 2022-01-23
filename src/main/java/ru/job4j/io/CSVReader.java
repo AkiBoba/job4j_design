@@ -1,11 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.FileStore;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -38,6 +34,14 @@ public class CSVReader {
 //                e.printStackTrace();
 //            }
 //        }
+        BufferedOutputStream bs = new BufferedOutputStream(new FileOutputStream(argsName.get("out")));
+        for (String str : result) {
+            try {
+                bs.write(str.getBytes(StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         result.forEach(System.out :: print);
     }
 
