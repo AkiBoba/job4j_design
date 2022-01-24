@@ -25,20 +25,7 @@ public class CSVReader {
             string = scanner.nextLine();
             result.add(newString(list, string, delimiter, filters));
         }
-
-        String data = String.join(
-                System.lineSeparator(),
-                result.stream().toList()
-        );
-
-        if (argsName.get("out").equals("stdout")) {
-            System.out.println(data);
-        }
-        try {
-            Files.writeString(new File(argsName.get("out")).toPath(), data);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        outResult(argsName.get("out"), result);
     }
 
     private static String newString(List<String> list, String string, String delimiter, List<String> filters) {
@@ -49,12 +36,28 @@ public class CSVReader {
         return newstring.substring(0, newstring.length() - 1);
     }
 
+    private static void outResult(String outTo, List<String> result) {
+        String data = String.join(
+                System.lineSeparator(),
+                result.stream().toList()
+        );
+
+        if ("stdout".equals(outTo)) {
+            System.out.println(data);
+        }
+        try {
+            Files.writeString(new File(outTo).toPath(), data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void validation(ArgsName args) {
         String res = args.get("path");
         if (!Paths.get(res).toFile().exists()) {
             throw new IllegalArgumentException("Файл с данными не существует");
         }
-        if (!Paths.get(args.get("out")).toFile().exists() && !args.get("out").equals("stdout")) {
+        if (!Paths.get(args.get("out")).toFile().exists() && !"stdout".equals(args.get("out"))) {
             throw new IllegalArgumentException("Ключ out имеет недопустимые значения");
         }
         if (!args.get("delimiter").equals(";")) {
@@ -64,7 +67,6 @@ public class CSVReader {
 
     public static void main(String[] args) throws Exception {
         ArgsName argsName = ArgsName.of(args);
-        validation(argsName);
         handle(argsName);
     }
 }
