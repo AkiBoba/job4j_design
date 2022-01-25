@@ -57,7 +57,7 @@ public class CSVReader {
         if (!Paths.get(res).toFile().exists()) {
             throw new IllegalArgumentException("Файл с данными не существует");
         }
-        if (!args.get("delimiter").equals(";")) {
+        if (!";".equals(args.get("delimiter"))) {
             throw new IllegalArgumentException("Ключ delimiter имеет недопустимые значения");
         }
     }
