@@ -19,7 +19,7 @@ public class UsageLog4j {
         short sh = 32;
         boolean bool = false;
         float fl = 745.25F;
-        long lg = 23000000;
+        long lg = 23000000L;
         LOG.debug("name : {}, age : {}", name, age);
         LOG.debug("cr : {}, dbl : {}", cr, dbl);
         LOG.debug("lastname : {}, lg {}", lastname, lg);
