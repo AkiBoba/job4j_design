@@ -70,3 +70,6 @@ Init maven
 #5.2. Архивировать проект [#861] -
 #6. Кодировка. [#862]  -
 #7. Scanner [#504791] - io.CSVReader -
+
+    2.2.2. Socket
+#2. Что такое Socket? [#4850] - io.EchoServer 
