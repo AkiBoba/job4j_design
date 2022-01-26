@@ -10,10 +10,20 @@ public class UsageLog4j {
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
-        LOG.trace("trace message");
-        LOG.debug("debug message");
-        LOG.info("info message");
-        LOG.warn("warn message");
-        LOG.error("error message");
+        String name = "Petr";
+        int age = 33;
+        var cr = "C";
+        double dbl = 12.5;
+        String lastname = "Arsentev";
+        byte b = 0;
+        short sh = 32;
+        boolean bool = false;
+        float fl = 745.25F;
+        long lg = 23000000;
+        LOG.debug("name : {}, age : {}", name, age);
+        LOG.debug("cr : {}, dbl : {}", cr, dbl);
+        LOG.debug("lastname : {}, lg {}", lastname, lg);
+        LOG.debug("b : {}, fl : {}", b, fl);
+        LOG.debug("sh : {}, bool : {}", sh, bool);
     }
 }
