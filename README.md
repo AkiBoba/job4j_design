@@ -79,3 +79,4 @@ Init maven
 #1. Log4j. Логирование системы. [#95335] - UsageLog4j 
 #2. Simple Loggin Facade 4 Java. [#268849]
 #3. Slf4j - вывод переменных. [#268852]
+#4. Slf4j - вывод exception. [#268853]
