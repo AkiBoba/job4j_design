@@ -16,10 +16,12 @@ public class EchoServer {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                         inText = in.readLine().split(" ")[1];
                         switch (inText) {
-                            case ("Hello"):
+                            case ("/?msg=Hello"):
                                 out.write("Hello".getBytes());
-                            case ("Exit"):
+                                break;
+                            case ("/?msg=Exit"):
                                 server.close();
+                                break;
                             default:
                                 out.write("What".getBytes());
                         }
