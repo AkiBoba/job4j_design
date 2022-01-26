@@ -77,3 +77,4 @@ Init maven
 
     2.2.3. Логгирование
 #1. Log4j. Логирование системы. [#95335] - UsageLog4j 
+#2. Simple Loggin Facade 4 Java. [#268849]
