@@ -32,7 +32,6 @@ public class Contact implements Serializable {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         final Contact contact = new Contact(123456, "+7 (111) 111-11-11");
 
-        /* Запись объекта во временный файл, который удалится системой */
         File tempFile = Files.createTempFile(null, null).toFile();
         try (FileOutputStream fos = new FileOutputStream(tempFile);
              ObjectOutputStream oos =
@@ -40,7 +39,6 @@ public class Contact implements Serializable {
             oos.writeObject(contact);
         }
 
-        /* Чтение объекта из файла */
         try (FileInputStream fis = new FileInputStream(tempFile);
              ObjectInputStream ois =
                      new ObjectInputStream(fis)) {
