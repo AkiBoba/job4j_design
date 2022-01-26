@@ -3,13 +3,10 @@ package ru.job4j.io;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 public class EchoServer {
     public static void main(String[] args) throws IOException {
-        String regex = "^-[^=]+=Bye[^=]+";
-        Predicate<String> filter = line -> Pattern.matches(regex, line);
+        String inText;
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
                 Socket socket = server.accept();
@@ -17,14 +14,15 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
-
-                        if ("/?msg=Bye".equals((str.split(" ")[1]))) {
-                            server.close();
-                            break;
+                        inText = in.readLine().split(" ")[1];
+                        switch (inText) {
+                            case ("Hello"):
+                                out.write("Hello".getBytes());
+                            case ("Exit"):
+                                server.close();
+                            default:
+                                out.write("What".getBytes());
                         }
-                        System.out.println(str);
-                    }
                     out.flush();
                 }
             }
