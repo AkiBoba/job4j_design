@@ -84,4 +84,4 @@ Init maven
     2.2.4. Сериализация
 #1. Что такое Сериализация? [#313163] - serialization.java.Contact
 #2. Формат JSON [#313164] -
-#3. Формат XML [#313165] - serialization.xml
+#3. Формат XML [#313165] - serialization.xml 

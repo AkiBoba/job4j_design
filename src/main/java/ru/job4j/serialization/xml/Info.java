@@ -9,8 +9,8 @@ import com.google.gson.GsonBuilder;
 public class Info {
     public static void main(String[] args) {
         final Buyer buyer = new Buyer(true, 5, "MMM",
-                new Contact (3, "Wall Street"),
-                new String[]{"Отсрочка", "Доставка"}
+                new Contact(3, "Wall Street"),
+                new String[] {"Отсрочка", "Доставка"}
         );
 
         final Gson gson = new GsonBuilder().create();
