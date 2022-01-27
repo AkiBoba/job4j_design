@@ -9,7 +9,6 @@ public class UsageLog4j {
     private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
     public static void main(String[] args) {
-        BasicConfigurator.configure();
         String name = "Petr";
         int age = 33;
         var cr = "C";
