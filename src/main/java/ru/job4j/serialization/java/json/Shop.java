@@ -19,15 +19,15 @@ public class Shop {
         final String consumerJson =
                 "{"
                         + "\"company\":true,"
-                        + "\"discunt\":" + 5
-                        + "\"name\":\"MMM\","
+                        + "\"discount\":" + 5
+                        + ", \"name\":\"MMM\","
                         + "\"address\":"
                         + "{"
                         + "\"street\":"
                         + "\"Wall Street\","
                         + "\"house\":" + 3
                         + "},"
-                        + "\"condition\":"
+                        + "\"conditions\":"
                         + "[\"Отсрочка\",\"Доставка\"]"
                         + "}";
         final Consumer personMod = gson.fromJson(consumerJson, Consumer.class);
