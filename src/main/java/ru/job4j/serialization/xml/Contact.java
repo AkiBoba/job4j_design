@@ -1,13 +1,20 @@
 package ru.job4j.serialization.xml;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 /**
  * @author Vladimir Likhachev
  */
+@XmlRootElement(name = "contact")
 public class Contact {
-    private final String street;
-    private final int house;
+    @XmlAttribute
+    private String street;
+    @XmlAttribute
+    private int house;
+
+    public Contact() {
+    }
 
     public Contact(int house, String street) {
         this.house = house;
