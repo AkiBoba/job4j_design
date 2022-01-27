@@ -86,3 +86,4 @@ Init maven
 #2. Формат JSON [#313164] -
 #3. Формат XML [#313165] - serialization.xml 
 #4. JAXB. Преобразование XML в POJO. [#315063]
+#5. Преобразование JSON в POJO. JsonObject [#315064]
