@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 import static ru.job4j.io.Search.search;
 
@@ -34,5 +35,12 @@ public class Find {
         String name = argsName.get("n");
         String typeFind = argsName.get("t");
         String dirForSave = argsName.get("o");
+        String regex = name.replace(".", "\\.")
+                .replace("?", ".");
+        Predicate<String> filter = line -> Pattern.matches(regex, line);
+        String tmp = "test.txt";
+        if (filter.test(tmp)) {
+            System.out.println(tmp);
+        }
     }
 }
