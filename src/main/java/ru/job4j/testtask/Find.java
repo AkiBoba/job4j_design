@@ -23,22 +23,27 @@ public class Find {
                 && !Paths.get(dirForFind).toFile().isDirectory()) {
             throw new IllegalArgumentException("Дирректория поиска не существует или это не папка");
         }
-        if (!"mask".equals(typeFind) && !"name".equals(typeFind) && !"regex ".equals(typeFind)) {
+        if (!"mask".equals(typeFind) && !"name".equals(typeFind) && !"regex".equals(typeFind)) {
             throw new IllegalArgumentException("Тип поиска указан не корректно, должен быть mask, name или regex");
         }
     }
 
     public static void main(String[] args) throws IOException {
         validation(args);
+        String regex = "";
         ArgsName argsName = ArgsName.of(args);
         String dirForFind = argsName.get("d");
         String name = argsName.get("n");
         String typeFind = argsName.get("t");
         String dirForSave = argsName.get("o");
-        String regex = name.replace(".", "\\.")
-                .replace("?", ".");
-        Predicate<String> filter = line -> Pattern.matches(regex, line);
-        String tmp = "test.txt";
+        if ("regex".equals(typeFind)) {
+            regex = "^" + name.replace(".", "\\.")
+                    .replace("*", ".*")
+                    .replace("?", ".");
+        }
+        String finalRegex = regex;
+        Predicate<String> filter = line -> Pattern.matches(finalRegex, line);
+        String tmp = "txt.txt";
         if (filter.test(tmp)) {
             System.out.println(tmp);
         }

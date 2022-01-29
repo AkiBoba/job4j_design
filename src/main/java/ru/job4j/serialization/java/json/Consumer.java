@@ -2,11 +2,9 @@ package ru.job4j.serialization.java.json;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ru.job4j.serialization.json.Person;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Vladimir Likhachev
@@ -36,6 +34,14 @@ public class Consumer {
 
     public String getName() {
         return name;
+    }
+
+    public Map<String, Serializable> getAddress() {
+        return Map.of("street ", address.getStreet(), "house", address.getHouse());
+    }
+
+    public String[] getConditions() {
+        return conditions;
     }
 
     @Override
@@ -71,7 +77,8 @@ public class Consumer {
         JSONArray jsonConditions = new JSONArray(list);
 
         /* JSONObject напрямую методом put */
-        final Consumer person = new Consumer(false, 30, "mmm",
+        final Consumer person = new Consumer(false,
+                3, "mmm",
                 new Address(13, "5 St"),
                 new String[]{"Предоплата", "Самовывоз"}
         );
@@ -80,7 +87,7 @@ public class Consumer {
         jsonObject.put("discount", person.getDiscount());
         jsonObject.put("name", person.getName());
         jsonObject.put("address", jsonAddress);
-        jsonObject.put("statuses", jsonConditions);
+        jsonObject.put("conditions", jsonConditions);
 
         /* Выведем результат в консоль */
         System.out.println(jsonObject);

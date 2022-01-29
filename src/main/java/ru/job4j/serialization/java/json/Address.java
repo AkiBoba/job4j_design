@@ -5,13 +5,13 @@ import java.io.Serializable;
 /**
  * @author Vladimir Likhachev
  */
-public class Address {
+public class Address implements Serializable {
     private final String street;
     private final int house;
 
     public Address(int house, String street) {
-        this.house = house;
         this.street = street;
+        this.house = house;
     }
 
     @Override
@@ -21,5 +21,13 @@ public class Address {
                 + street + '\''
                 + ", house=" + house
                 + '}';
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public int getHouse() {
+        return house;
     }
 }
