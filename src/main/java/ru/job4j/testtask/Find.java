@@ -44,7 +44,7 @@ public class Find {
         }
     }
 
-    public static void validation(String[] args) {
+    public static List<String> validation(String[] args) {
         if (args.length != 4) {
             throw new IllegalArgumentException("Недостаточно аргументов для корректной работы приложения");
         }
@@ -58,15 +58,15 @@ public class Find {
         if (!"mask".equals(typeFind) && !"name".equals(typeFind) && !"regex".equals(typeFind)) {
             throw new IllegalArgumentException("Тип поиска указан не корректно, должен быть mask, name или regex");
         }
+        return List.of(argsName.get("d"), argsName.get("n"), argsName.get("t"), argsName.get("o"));
     }
 
     public static void main(String[] args) throws IOException {
-        validation(args);
-        ArgsName argsName = ArgsName.of(args);
-        String dirForFind = argsName.get("d");
-        String name = argsName.get("n");
-        String typeFind = argsName.get("t");
-        String dirForSave = argsName.get("o");
+        List<String> inArgs = validation(args);
+        String dirForFind = inArgs.get(0);
+        String name = inArgs.get(1);
+        String typeFind = inArgs.get(2);
+        String dirForSave = inArgs.get(3);
 
         saveLog(excludeFiles(Paths.get(dirForFind), name, typeFind), dirForSave);
 
