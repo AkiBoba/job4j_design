@@ -29,8 +29,7 @@ public class Find {
             filter = line -> Pattern.matches(regex, line.toFile().getName());
         }
         if ("regex".equals(typeFind)) {
-            String regex = name;
-            filter = line -> Pattern.matches(regex, line.toFile().getName());
+            filter = line -> Pattern.matches(name, line.toFile().getName());
         }
 
         Search.search(root, filter).forEach(p -> list.add(p.toString()));
@@ -71,17 +70,5 @@ public class Find {
 
         saveLog(excludeFiles(Paths.get(dirForFind), name, typeFind), dirForSave);
 
-//
-//        if (!"name".equals(typeFind)) {
-//            regex = "^" + name.replace(".", "\\.")
-//                    .replace("*", ".*")
-//                    .replace("?", ".");
-//        }
-//        String finalRegex = regex;
-//        Predicate<String> filter = line -> Pattern.matches(finalRegex, line);
-//        String tmp = "txt.txt";
-//        if (filter.test(tmp)) {
-//            System.out.println(tmp);
-//        }
     }
 }
