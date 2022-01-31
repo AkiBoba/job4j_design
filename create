@@ -1,0 +1,15 @@
+create table book (
+	id serial primary key, 
+	title text,
+	author varchar (255),
+	price int
+);
+insert into book 
+(title, author, price) VALUES (
+	'Мастер и Маргарита',
+	'Булгаков М.А.',
+	670
+);
+update book 
+set price = 990;
+delete from book;
