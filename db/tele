@@ -1,0 +1,40 @@
+create table numbers (
+	id serial primary key, 
+	telephon varchar (255)
+);
+insert into numbers 
+(telephon) VALUES (
+	'+78526324585'
+);
+insert into numbers
+(telephon) VALUES (
+	'+35857772536'
+);
+create table person (
+	id serial primary key, 
+	name varchar (255)
+);
+insert into person 
+(name) VALUES (
+	'Mr Smith'
+);
+insert into person 
+(name) VALUES (
+	'Mr Thomas'
+);
+create table abonent (
+	id serial primary key, 
+	numbers_id int references numbers(id) unique,
+	person_id int references person(id) unique
+);
+insert into abonent 
+(numbers_id, person_id) VALUES (
+	1, 1
+);
+insert into abonent 
+(numbers_id, person_id) VALUES (
+	2, 2
+);
+
+
+select * from abonent;

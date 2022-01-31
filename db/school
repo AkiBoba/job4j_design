@@ -1,0 +1,44 @@
+create table class_room (
+	id serial primary key, 
+	number int
+);
+insert into class_room 
+(number) VALUES (
+	102
+);
+insert into class_room 
+(number) VALUES (
+	55
+);
+create table teacher (
+	id serial primary key, 
+	name varchar (255)
+);
+insert into teacher 
+(name) VALUES (
+	'Mr Smith'
+);
+insert into teacher 
+(name) VALUES (
+	'Mr Thomas'
+);
+create table school (
+	id serial primary key, 
+	class_room_id int references class_room(id),
+	teacher_id int references teacher(id)
+);
+insert into school 
+(class_room_id, teacher_id) VALUES (
+	1, 1
+);
+insert into school 
+(class_room_id, teacher_id) VALUES (
+	1, 2
+);
+insert into school 
+(class_room_id, teacher_id) VALUES (
+	2, 2
+);
+
+
+select * from school;
