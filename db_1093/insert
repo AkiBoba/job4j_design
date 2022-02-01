@@ -1,0 +1,37 @@
+insert into rules(name) values ('buy');
+insert into rules(name) values ('sale');
+
+insert into role(name, rules_id) values ('client', 1);
+insert into role(name, rules_id) values ('manager', 2);
+
+insert into users(name, role_id) values ('Ivan', 1);
+insert into users(name, role_id) values ('Kirill', 2);
+insert into users(name, role_id) values ('Roman', 1);
+
+insert into comments(comment) values ('Avto');
+insert into comments(comment) values ('Avia');
+
+insert into attachs(name) values ('docs');
+
+insert into category(name) values ('Danger');
+insert into category(name) values ('Up');
+
+insert into state(name) values ('in');
+insert into state(name) values ('out');
+
+insert into item
+(	comments_id,
+	attachs_id,
+	category_id,
+	state_id
+) values (1, 1, 1, 1);
+insert into item
+(	comments_id,
+	attachs_id,
+	category_id,
+	state_id
+) values (2, 1, 2, 2);
+
+insert into shop(user_id, item_id) values (1, 1);
+insert into shop(user_id, item_id) values (2, Null);
+insert into shop(user_id, item_id) values (3, 2);
