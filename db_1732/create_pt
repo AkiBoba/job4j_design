@@ -17,6 +17,8 @@ insert into type(name) values ('ХЛЕБ');
 insert into product(name, type_id, expired_date, price) 
 values ('hohland', 1, '2022-02-02', 195);
 insert into product(name, type_id, expired_date, price) 
+values ('valio', 1, '2022-02-02', 195);
+insert into product(name, type_id, expired_date, price) 
 values ('Дружба', 1, '2022-02-28', 95);
 insert into product(name, type_id, expired_date, price) 
 values ('Российский', 1,'2022-03-05', 105);
@@ -26,4 +28,3 @@ insert into product(name, type_id, expired_date, price)
 values ('Холодное мороженое фрутайс', 2,'2022-02-15', 29);
 insert into product(name, type_id, expired_date, price) 
 values ('Ржаной хлеб', 3,'2022-01-30', 35);
-

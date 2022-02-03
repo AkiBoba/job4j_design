@@ -10,8 +10,8 @@ select name from
 product 
 where expired_date < CURRENT_DATE;
 
-select name, price from product 
-order by price desc limit 1; 
+select name from product 
+where price = (select max(price) from product);
 
 select t.name as type, count(t.name)
 from type as t
