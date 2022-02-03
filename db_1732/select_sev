@@ -1,0 +1,32 @@
+select p.name as product from type as t
+join product as p on p.type_id = t.id
+where t.name like 'СЫР';
+
+select name from 
+product 
+where name like '%мороженое%';
+
+select name from 
+product 
+where expired_date < CURRENT_DATE;
+
+select name, price from product 
+order by price desc limit 1; 
+
+select t.name as type, count(t.name)
+from type as t
+join product as p on p.type_id = t.id
+group by t.name;
+
+select p.name as product from type as t
+join product as p on p.type_id = t.id
+where t.name like 'СЫР' or t.name like 'МОЛОКО';
+
+select t.name as type
+from type as t
+join product as p on p.type_id = t.id
+group by t.name
+having count(t.name) < 10;
+
+select p.name as product, t.name as type from type as t
+join product as p on p.type_id = t.id;

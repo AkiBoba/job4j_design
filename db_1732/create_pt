@@ -1,0 +1,29 @@
+create table type(
+    id serial primary key,
+    name varchar(255)
+);
+
+create table product(
+    id serial primary key,
+    name varchar(255),
+	type_id int references type(id),
+	expired_date timestamp,
+    price float
+);
+insert into type(name) values ('СЫР');
+insert into type(name) values ('МОЛОКО');
+insert into type(name) values ('ХЛЕБ');
+
+insert into product(name, type_id, expired_date, price) 
+values ('hohland', 1, '2022-02-02', 195);
+insert into product(name, type_id, expired_date, price) 
+values ('Дружба', 1, '2022-02-28', 95);
+insert into product(name, type_id, expired_date, price) 
+values ('Российский', 1,'2022-03-05', 105);
+insert into product(name, type_id, expired_date, price) 
+values ('Вкусное мороженое', 2,'2022-02-25', 55);
+insert into product(name, type_id, expired_date, price) 
+values ('Холодное мороженое фрутайс', 2,'2022-02-15', 29);
+insert into product(name, type_id, expired_date, price) 
+values ('Ржаной хлеб', 3,'2022-01-30', 35);
+
