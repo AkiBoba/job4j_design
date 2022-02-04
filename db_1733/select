@@ -1,0 +1,4 @@
+select c.id car, c.vin, b.name body, e.name engine, g.name gear from car as c
+left join body b on b.car_id = c.id
+left join engine e on e.car_id = c.id
+left join gear g on g.car_id = c.id;
