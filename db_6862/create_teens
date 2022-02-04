@@ -1,0 +1,17 @@
+
+create table teens(
+    id serial primary key,
+    name varchar(255),
+	gender varchar(1)
+);
+
+insert into teens(name, gender) values ('teen 1', 'm');
+insert into teens(name, gender) values ('teen 2', 'w');
+insert into teens(name, gender) values ('teen 3', 'm');
+insert into teens(name, gender) values ('teen 4', 'w');
+insert into teens(name, gender) values ('teen 5', 'w');
+insert into teens(name, gender) values ('teen 6', 'm');
+insert into teens(name, gender) values ('teen 7', 'm');
+
+select * from teens cross join (select name as pair_name, gender gen from teens where gender = 'w') name
+where gender != gen;

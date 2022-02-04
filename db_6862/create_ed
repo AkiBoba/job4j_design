@@ -1,0 +1,46 @@
+
+create table departments (
+    id serial primary key,
+    name varchar(255)
+);
+
+create table emploers(
+    id serial primary key,
+    name varchar(255),
+	departments_id int references departments(id)
+);
+
+insert into departments(name) values ('buh');
+insert into departments(name) values ('manag');
+insert into departments(name) values ('sale');
+insert into departments(name) values ('logistic');
+
+insert into emploers(name, departments_id) values ('em 1', 1);
+insert into emploers(name, departments_id) values ('em 2', 2);
+insert into emploers(name, departments_id) values ('em 3', 3);
+insert into emploers(name, departments_id) values ('em 4', 2);
+insert into emploers(name, departments_id) values ('em 5', 3);
+insert into emploers(name, departments_id) values ('em 6', 3);
+insert into emploers(name, departments_id) values ('em 7', 2);
+insert into emploers(name, departments_id) values ('em 6', 3);
+
+select d.name depart, e.name, e.departments_id dep_id from departments d
+left join emploers e on d.id = e.departments_id;
+select d.name depart, e.name, e.departments_id dep_id from departments d
+right join emploers e on d.id = e.departments_id;
+select d.name depart, e.name, e.departments_id dep_id from departments d
+full join emploers e on d.id = e.departments_id;
+select d.name depart, e.name, e.departments_id dep_id from departments d
+cross join emploers e;
+select d.name depart, e.name, e.departments_id dep_id from departments d
+left join emploers e on d.id = e.departments_id
+where e.departments_id is null;
+select d.name depart, e.name, e.departments_id dep_id from departments d
+left join emploers e on d.id = e.departments_id
+where e.departments_id is not null;
+select d.name depart, e.name, e.departments_id dep_id from departments d
+right join emploers e on d.id = e.departments_id;
+
+
+
+
