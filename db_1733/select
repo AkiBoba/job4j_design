@@ -1,8 +1,17 @@
 select c.id car, c.vin, b.name body, e.name engine, g.name gear from car as c
-left join body b on b.car_id = c.id
-left join engine e on e.car_id = c.id
-left join gear g on g.car_id = c.id;
+left join body b on b.id = c.body_id
+left join engine e on e.id = c.engine_id
+left join gear g on g.id = c.gear_id;
 
-select name body from body where car_id is null;
-select name gear from gear where car_id is null;
-select name engine from engine where car_id is null;
+select b.name body from car as c
+right join body b on b.id = c.body_id
+where c.id is null;
+
+select e.name engine from car as c
+right join engine e on e.id = c.engine_id
+where c.id is null;
+
+select g.name gear from car as c
+right join gear g on g.id = c.gear_id
+where c.id is null;
+

@@ -15,9 +15,9 @@ create table gear(
 create table car(
 	id serial primary key,
 	vin int,
-	body_id int references body(id) unique,
-	engine_id int references engine(id) unique,
-	gear_id int references gear(id) unique
+	body_id int references body(id),
+	engine_id int references engine(id),
+	gear_id int references gear(id)
 	);
 
 insert into body(name) values('coupe');
