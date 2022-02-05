@@ -1,0 +1,22 @@
+create table mark (
+	id serial primary key, 
+	name varchar (255)
+);
+insert into mark 
+(name) VALUES (
+	'toyota'
+);
+create table model (
+	id serial primary key, 
+	name varchar (255),
+	mark_id int references mark(id)
+);
+insert into model 
+(name, mark_id) VALUES (
+	'camry',
+	1
+);
+
+select * from mark;
+
+select * from model where id in (select id from mark);

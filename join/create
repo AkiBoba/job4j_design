@@ -1,0 +1,37 @@
+create table rules (
+    id serial primary key,
+    name varchar(255)
+);
+create table role (
+    id serial primary key,
+    name varchar(255)
+);
+create table users (
+    id serial primary key,
+    name varchar(255),
+	role_id int references role(id),
+	rules_id int references rules(id)
+);
+
+insert into rules(name) values ('buy');
+insert into rules(name) values ('sale');
+insert into rules(name) values ('drive');
+
+insert into role(name) values ('client');
+insert into role(name) values ('manager');
+insert into role(name) values ('driver');
+
+insert into users(name, role_id, rules_id) values ('Olga', 1, 1);
+insert into users(name, role_id, rules_id) values ('Kirill', 2, 2);
+insert into users(name, role_id, rules_id) values ('Roman', 3, 3);
+insert into users(name, role_id, rules_id) values ('Ivan', null, null);
+
+select u.name, ro.name as role from users as u 
+join role as ro on u.role_id = ro.id;
+
+select u.name, ru.name as rules from users as u 
+join rules as ru on u.rules_id = ru.id;
+
+select u.name, ro.name as role, ru.name as rules from users as u 
+join role as ro on u.role_id = ro.id
+join rules as ru on u.rules_id = ru.id;

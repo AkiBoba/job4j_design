@@ -1,0 +1,57 @@
+
+create table body(
+	id serial primary key,
+	name varchar(255)
+);
+create table engine(
+	id serial primary key,
+	name varchar(255)
+);
+create table gear(
+	id serial primary key,
+	name varchar(255)
+);
+
+create table car(
+	id serial primary key,
+	vin int,
+	body_id int references body(id),
+	engine_id int references engine(id),
+	gear_id int references gear(id)
+	);
+
+insert into body(name) values('coupe');
+insert into body(name) values('sedan');
+insert into body(name) values('hatch');
+insert into body(name) values('universal');
+
+insert into engine(name) values('gas');
+insert into engine(name) values('disel');
+insert into engine(name) values('gybrid');
+insert into engine(name) values('electro');
+
+insert into gear(name) values('hand');
+insert into gear(name) values('auto');
+insert into gear(name) values('robot');
+insert into gear(name) values('variator');
+
+insert into car(vin, body_id, engine_id, gear_id) values(111, 1, 1, 1);
+insert into car(vin, body_id, engine_id, gear_id) values(122, 2, 2, 2);
+insert into car(vin, body_id, engine_id, gear_id) values(133, 3, 3, 3);
+
+select c.id car, c.vin, b.name body, e.name engine, g.name gear from car as c
+left join body b on b.id = c.body_id
+left join engine e on e.id = c.engine_id
+left join gear g on g.id = c.gear_id;
+
+select b.name body from car as c
+right join body b on b.id = c.body_id
+where c.id is null;
+
+select e.name engine from car as c
+right join engine e on e.id = c.engine_id
+where c.id is null;
+
+select g.name gear from car as c
+right join gear g on g.id = c.gear_id
+where c.id is null;
