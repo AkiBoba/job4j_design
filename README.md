@@ -91,4 +91,4 @@ Init maven
 #2. Поиск файлов по критерию [#783]  контрольное задание раздела - 
 
     2.3. SQL, JDBC
-0. JDBC [#6863] Подключение к БД (jdbc.ConnectionDemo)  -
+0. JDBC [#6863] Подключение к БД (jdbc.ConnectionDemo)  - 

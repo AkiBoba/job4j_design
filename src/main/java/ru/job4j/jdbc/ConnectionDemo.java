@@ -11,12 +11,13 @@ import java.sql.SQLException;
  */
 public class ConnectionDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
         Config config = new Config("app.properties");
         config.load();
+        String driver = "hibernate.connection.driver_class";
         String url = "hibernate.connection.url";
         String login = "hibernate.connection.username";
         String password = "hibernate.connection.password";
+        Class.forName(config.value(driver));
         try (Connection connection = DriverManager.getConnection(config.value(url),
                 config.value(login), config.value(password))) {
             DatabaseMetaData metaData = connection.getMetaData();
