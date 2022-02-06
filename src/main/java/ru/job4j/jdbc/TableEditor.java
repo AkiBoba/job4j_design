@@ -16,18 +16,25 @@ public class TableEditor implements AutoCloseable {
 
     private Properties properties;
 
-    public TableEditor(Properties properties) {
+    public TableEditor(Properties properties) throws ClassNotFoundException {
         this.properties = properties;
         initConnection();
     }
 
-    private void initConnection() {
-//        connection = null;
-//        Class.forName("org.postgresql.Driver");
-//        String url = "jdbc:postgresql://localhost:5432/idea_db";
-//        String login = "postgres";
-//        String password = "password";
-//        return DriverManager.getConnection(url, login, password);
+    private void initConnection() throws ClassNotFoundException {
+        String driver = "hibernate.connection.driver_class";
+        String url = "hibernate.connection.url";
+        String login = "hibernate.connection.username";
+        String password = "hibernate.connection.password";
+        Class.forName(properties.get(driver).toString());
+        try (Connection connection = DriverManager.getConnection(properties.get(url).toString(),
+                properties.get(login).toString(), properties.get(password).toString())) {
+            DatabaseMetaData metaData = connection.getMetaData();
+            System.out.println(metaData.getUserName());
+            System.out.println(metaData.getURL());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void createTable(String tableName) {
@@ -76,6 +83,8 @@ public class TableEditor implements AutoCloseable {
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
         properties.load(new FileReader("app.properties"));
-//        String drv = properties.get("hibernate.connection.driver_class").toString();
+        TableEditor tableEditor = new  TableEditor(properties);
+        tableEditor.createTable("demo_stat");
+
     }
 }
