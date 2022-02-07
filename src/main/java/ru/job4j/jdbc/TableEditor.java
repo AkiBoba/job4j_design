@@ -120,7 +120,7 @@ public class TableEditor implements AutoCloseable {
         properties.load(new FileReader("app.properties"));
         TableEditor tableEditor = new  TableEditor(properties);
         tableEditor.createTable("demo_table");
-        tableEditor.addColumn("demo_table", "name","text");
+        tableEditor.addColumn("demo_table", "name", "text");
         tableEditor.renameColumn("demo_table", "name", "rename");
         tableEditor.dropColumn("demo_table", "rename");
         tableEditor.dropTable("demo_table");
