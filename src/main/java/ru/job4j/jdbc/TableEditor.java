@@ -16,42 +16,29 @@ public class TableEditor implements AutoCloseable {
 
     private Properties properties;
 
-    public TableEditor(Properties properties) throws ClassNotFoundException {
+    public TableEditor(Properties properties) throws ClassNotFoundException, SQLException {
         this.properties = properties;
         initConnection();
     }
 
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
+    private void initConnection() throws ClassNotFoundException, SQLException {
         String driver = "hibernate.connection.driver_class";
         String url = "hibernate.connection.url";
         String login = "hibernate.connection.username";
         String password = "hibernate.connection.password";
         Class.forName(properties.get(driver).toString());
-        return DriverManager.getConnection(properties.get(url).toString(),
+        connection = DriverManager.getConnection(properties.get(url).toString(),
                 properties.get(login).toString(), properties.get(password).toString());
     }
 
-    private void initConnection() throws ClassNotFoundException {
-        try (Connection connection = getConnection()) {
-            DatabaseMetaData metaData = connection.getMetaData();
-            System.out.printf("Успешное соединение с БД %s!%n", metaData.getURL());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
     private void testExecute(String tableName, String sql) {
-        try (Connection connection = getConnection()) {
             try (Statement statement = connection.createStatement()) {
                 statement.execute(sql);
                 System.out.println(getTableScheme(connection, tableName));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
         }
-    }
 
     public void createTable(String tableName) {
         String sql = String.format(
@@ -118,11 +105,16 @@ public class TableEditor implements AutoCloseable {
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
         properties.load(new FileReader("app.properties"));
-        TableEditor tableEditor = new  TableEditor(properties);
+        try {
+            TableEditor tableEditor = new TableEditor(properties);
         tableEditor.createTable("demo_table");
-        tableEditor.addColumn("demo_table", "name", "text");
-        tableEditor.renameColumn("demo_table", "name", "rename");
-        tableEditor.dropColumn("demo_table", "rename");
+            tableEditor.addColumn("demo_table", "name", "text");
+            tableEditor.renameColumn("demo_table", "name", "rename");
+            tableEditor.dropColumn("demo_table", "rename");
         tableEditor.dropTable("demo_table");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
