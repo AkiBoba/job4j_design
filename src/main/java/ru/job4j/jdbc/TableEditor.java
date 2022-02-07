@@ -21,36 +21,71 @@ public class TableEditor implements AutoCloseable {
         initConnection();
     }
 
-    private void initConnection() throws ClassNotFoundException {
+    private Connection getConnection() throws ClassNotFoundException, SQLException {
         String driver = "hibernate.connection.driver_class";
         String url = "hibernate.connection.url";
         String login = "hibernate.connection.username";
         String password = "hibernate.connection.password";
         Class.forName(properties.get(driver).toString());
-        try (Connection connection = DriverManager.getConnection(properties.get(url).toString(),
-                properties.get(login).toString(), properties.get(password).toString())) {
+        return DriverManager.getConnection(properties.get(url).toString(),
+                properties.get(login).toString(), properties.get(password).toString());
+    }
+
+    private void initConnection() throws ClassNotFoundException {
+        try (Connection connection = getConnection()) {
             DatabaseMetaData metaData = connection.getMetaData();
-            System.out.println(metaData.getUserName());
-            System.out.println(metaData.getURL());
+            System.out.printf("Успешное соединение с БД %s!%n", metaData.getURL());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void createTable(String tableName) {
+    private void testExecute(String tableName, String sql) {
+        try (Connection connection = getConnection()) {
+            try (Statement statement = connection.createStatement()) {
+                statement.execute(sql);
+                System.out.println(getTableScheme(connection, tableName));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
+    public void createTable(String tableName) {
+        String sql = String.format(
+                "create table if not exists %s();", tableName
+        );
+        testExecute(tableName, sql);
     }
 
     public void dropTable(String tableName) {
+        String sql = String.format(
+                "drop table if exists %s;", tableName
+        );
+        testExecute(tableName, sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) {
+        String sql = String.format(
+                "ALTER TABLE %s ADD %s %s", tableName, columnName, type
+        );
+        testExecute(tableName, sql);
     }
 
     public void dropColumn(String tableName, String columnName) {
+        String sql = String.format(
+                "ALTER TABLE %s drop %s", tableName, columnName
+        );
+        testExecute(tableName, sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) {
+        String sql = String.format(
+                "ALTER TABLE %s rename %s to %s", tableName, columnName, newColumnName
+        );
+        testExecute(tableName, sql);
     }
 
 
@@ -84,7 +119,10 @@ public class TableEditor implements AutoCloseable {
         Properties properties = new Properties();
         properties.load(new FileReader("app.properties"));
         TableEditor tableEditor = new  TableEditor(properties);
-        tableEditor.createTable("demo_stat");
-
+        tableEditor.createTable("demo_table");
+        tableEditor.addColumn("demo_table", "name","text");
+        tableEditor.renameColumn("demo_table", "name", "rename");
+        tableEditor.dropColumn("demo_table", "rename");
+        tableEditor.dropTable("demo_table");
     }
 }
