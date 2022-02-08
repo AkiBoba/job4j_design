@@ -114,8 +114,7 @@ public class TableEditor implements AutoCloseable {
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
         properties.load(new FileReader("app.properties"));
-        try {
-            TableEditor tableEditor = new TableEditor(properties);
+        try (TableEditor tableEditor = new TableEditor(properties)) {
             tableEditor.createTable("demo_table");
             tableEditor.addColumn("demo_table", "name", "text");
             tableEditor.renameColumn("demo_table", "name", "rename");

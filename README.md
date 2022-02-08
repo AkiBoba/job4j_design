@@ -92,6 +92,6 @@ Init maven
 
     2.3. SQL, JDBC
 0. JDBC [#6863] Подключение к БД (jdbc.ConnectionDemo)  - 
-1. 0.1. Statement [#379306] Для исполнения операций существуют
+1. 0.1. Statement [#379306] Для исполнения операций существуют-
  специальные интерфейсы: Statement, PrepareStatement. ---
 2. 0.2. PrepareStatement [#379307] -
