@@ -31,7 +31,7 @@ public class TableEditor implements AutoCloseable {
                 properties.get(login).toString(), properties.get(password).toString());
     }
 
-    private void testExecute(String tableName, String sql) {
+    private void eXecute(String tableName, String sql) {
             try (Statement statement = connection.createStatement()) {
                 statement.execute(sql);
                 System.out.println(getTableScheme(connection, tableName));
@@ -40,39 +40,48 @@ public class TableEditor implements AutoCloseable {
             }
         }
 
+    private void executeUpd(String tableName, String sql) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(sql);
+            System.out.println(getTableScheme(connection, tableName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void createTable(String tableName) {
         String sql = String.format(
                 "create table if not exists %s();", tableName
         );
-        testExecute(tableName, sql);
+        executeUpd(tableName, sql);
     }
 
     public void dropTable(String tableName) {
         String sql = String.format(
                 "drop table if exists %s;", tableName
         );
-        testExecute(tableName, sql);
+        executeUpd(tableName, sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) {
         String sql = String.format(
                 "ALTER TABLE %s ADD %s %s", tableName, columnName, type
         );
-        testExecute(tableName, sql);
+        eXecute(tableName, sql);
     }
 
     public void dropColumn(String tableName, String columnName) {
         String sql = String.format(
                 "ALTER TABLE %s drop %s", tableName, columnName
         );
-        testExecute(tableName, sql);
+        eXecute(tableName, sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) {
         String sql = String.format(
                 "ALTER TABLE %s rename %s to %s", tableName, columnName, newColumnName
         );
-        testExecute(tableName, sql);
+        eXecute(tableName, sql);
     }
 
 
@@ -107,11 +116,11 @@ public class TableEditor implements AutoCloseable {
         properties.load(new FileReader("app.properties"));
         try {
             TableEditor tableEditor = new TableEditor(properties);
-        tableEditor.createTable("demo_table");
+            tableEditor.createTable("demo_table");
             tableEditor.addColumn("demo_table", "name", "text");
             tableEditor.renameColumn("demo_table", "name", "rename");
             tableEditor.dropColumn("demo_table", "rename");
-        tableEditor.dropTable("demo_table");
+            tableEditor.dropTable("demo_table");
         } catch (Exception e) {
             e.printStackTrace();
         }
