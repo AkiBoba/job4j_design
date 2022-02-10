@@ -38,8 +38,7 @@ public class ImportDB {
         if (list.size() != 2) {
             throw new IllegalArgumentException();
         }
-
-        if (Pattern.matches(regex,list.get(0)) && Pattern.matches(regex,list.get(1))) {
+        if (Pattern.matches(regex, list.get(0)) && Pattern.matches(regex, list.get(1))) {
             throw new IllegalArgumentException();
         }
         return true;
