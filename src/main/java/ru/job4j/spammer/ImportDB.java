@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class ImportDB {
     private Properties cfg;
@@ -22,9 +24,25 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            rd.lines().forEach(str -> users.add(new User(str.split(";")[0], str.split(";")[1])));
+            Predicate<String> filter = s -> validate(s);
+            rd.lines()
+                    .filter(filter)
+                    .forEach(str -> users.add(new User(str.split(";")[0], str.split(";")[1])));
         }
         return users;
+    }
+
+    private boolean validate(String str) {
+        String regex = "^[ ]";
+        List<String> list = List.of(str.split(";"));
+        if (list.size() != 2) {
+            throw new IllegalArgumentException();
+        }
+
+        if (Pattern.matches(regex,list.get(0)) && Pattern.matches(regex,list.get(1))) {
+            throw new IllegalArgumentException();
+        }
+        return true;
     }
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
