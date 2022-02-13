@@ -24,7 +24,7 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            Predicate<String> filter = s -> validate(s);
+            Predicate<String> filter = this::validate;
             rd.lines()
                     .filter(filter)
                     .forEach(str -> users.add(new User(str.split(";")[0], str.split(";")[1])));
@@ -34,11 +34,8 @@ public class ImportDB {
 
     private boolean validate(String str) {
         String regex = "^[ ]";
-        List<String> list = List.of(str.split(";"));
-        if (list.size() != 2) {
-            throw new IllegalArgumentException();
-        }
-        if (Pattern.matches(regex, list.get(0)) && Pattern.matches(regex, list.get(1))) {
+        String[] array = str.split(";", 2);
+        if (array.length != 2 || array[0].isEmpty() || array[1].isEmpty()) {
             throw new IllegalArgumentException();
         }
         return true;
