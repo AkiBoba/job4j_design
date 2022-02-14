@@ -24,21 +24,17 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            Predicate<String> filter = this::validate;
             rd.lines()
-                    .filter(filter)
-                    .forEach(str -> users.add(new User(str.split(";")[0], str.split(";")[1])));
+            .forEach(str -> {
+                 String[] array = str.split(";", 2);
+                if (array.length != 2 || array[0].isEmpty() || array[1].isEmpty()) {
+                    throw new IllegalArgumentException();
+                    }
+                    users.add(new User(str.split(";")[0], str.split(";")[1]));
+                }
+            );
         }
         return users;
-    }
-
-    private boolean validate(String str) {
-        String regex = "^[ ]";
-        String[] array = str.split(";", 2);
-        if (array.length != 2 || array[0].isEmpty() || array[1].isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-        return true;
     }
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
@@ -49,7 +45,8 @@ public class ImportDB {
                 cfg.getProperty("jdbc.password")
         )) {
             for (User user : users) {
-                try (PreparedStatement ps = cnt.prepareStatement("insert into users(name, email) values (?, ?)")) {
+                try (PreparedStatement ps = cnt.prepareStatement(
+                        "insert into users(name, email) values (?, ?)")) {
                     ps.setString(1, user.name);
                     ps.setString(2, user.email);
                     ps.execute();
