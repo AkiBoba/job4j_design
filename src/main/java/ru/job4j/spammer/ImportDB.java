@@ -30,7 +30,7 @@ public class ImportDB {
                 if (array.length != 2 || array[0].isEmpty() || array[1].isEmpty()) {
                     throw new IllegalArgumentException();
                     }
-                    users.add(new User(str.split(";")[0], str.split(";")[1]));
+                    users.add(new User(array[0], array[1]));
                 }
             );
         }
